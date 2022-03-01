@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/patient")
-public class EventController {
+public class OwnerController {
 
     @Autowired
     private PatientRepository repository;
