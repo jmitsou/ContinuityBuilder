@@ -1,5 +1,6 @@
 package com.careerdevs.continuitybuilder.controllers;
 
+import com.careerdevs.continuitybuilder.repositories.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,11 +10,11 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/patient")
+@RequestMapping("/api/owner")
 public class OwnerController {
 
     @Autowired
-    private PatientRepository repository;
+    private OwnerRepository repository;
 
     @GetMapping
     public @ResponseBody

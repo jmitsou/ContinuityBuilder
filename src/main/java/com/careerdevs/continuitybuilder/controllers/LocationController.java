@@ -1,5 +1,7 @@
 package com.careerdevs.continuitybuilder.controllers;
 
+import com.careerdevs.continuitybuilder.models.Location;
+import com.careerdevs.continuitybuilder.repositories.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,39 +11,38 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/patient")
+@RequestMapping("/api/location")
 public class LocationController {
 
     @Autowired
-    private PatientRepository repository;
+    private LocationRepository repository;
 
     @GetMapping
     public @ResponseBody
-    List<Patient> getPatient() {return repository.findAll();}
+    List<Location> getLocation() {return repository.findAll();}
 
     @PostMapping
-    public ResponseEntity<Patient> createPatient(@RequestBody Patient newPatient){
-        return new ResponseEntity<>(repository.save(newPatient), HttpStatus.CREATED);
+    public ResponseEntity<Location> createLocation(@RequestBody Location newLocation){
+        return new ResponseEntity<>(repository.save(newLocation), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public @ResponseBody Patient getSinglePatient(@PathVariable Long id) {
+    public @ResponseBody Location getSingleLocation(@PathVariable Long id) {
         return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")
-    public @ResponseBody Patient updatePatient(@PathVariable Long id, @RequestBody Patient updates){
-        Patient patient = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public @ResponseBody Location updateLocation(@PathVariable Long id, @RequestBody Location updates){
+        Location location = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if (updates.getName() != null) patient.setName(updates.getName());
-        if (updates.getEmail() != null) patient.setEmail(updates.getEmail());
-        if (updates.getLanguages() != null) patient.setLanguages(updates.getLanguages());
+        if (updates.getName() != null) location.setName(updates.getName());
+
 
         return repository.save(patient);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> removePatient(@PathVariable Long id){
+    public ResponseEntity<String> removeLocation(@PathVariable Long id){
         repository.deleteById(id);
         return new ResponseEntity<>("User has been Removed", HttpStatus.OK);
     }
