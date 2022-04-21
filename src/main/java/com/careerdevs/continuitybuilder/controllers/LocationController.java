@@ -36,9 +36,9 @@ public class LocationController {
         Location location = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         if (updates.getName() != null) location.setName(updates.getName());
+        if (updates.getDescription() != null) location.setDescription(updates.getDescription());
 
-
-        return repository.save(patient);
+        return repository.save(location);
     }
 
     @DeleteMapping("/{id}")

@@ -1,5 +1,6 @@
 package com.careerdevs.continuitybuilder.controllers;
 
+import com.careerdevs.continuitybuilder.models.Owner;
 import com.careerdevs.continuitybuilder.repositories.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,27 +19,25 @@ public class OwnerController {
 
     @GetMapping
     public @ResponseBody
-    List<Patient> getPatient() {return repository.findAll();}
+    List<Owner> getPatient() {return repository.findAll();}
 
     @PostMapping
-    public ResponseEntity<Patient> createPatient(@RequestBody Patient newPatient){
-        return new ResponseEntity<>(repository.save(newPatient), HttpStatus.CREATED);
+    public ResponseEntity<Owner> createOwner(@RequestBody Owner newOwner){
+        return new ResponseEntity<>(repository.save(newOwner), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public @ResponseBody Patient getSinglePatient(@PathVariable Long id) {
+    public @ResponseBody Owner getSingleOwner(@PathVariable Long id) {
         return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")
-    public @ResponseBody Patient updatePatient(@PathVariable Long id, @RequestBody Patient updates){
-        Patient patient = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public @ResponseBody Owner updateOwner(@PathVariable Long id, @RequestBody Owner updates){
+        Owner owner = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if (updates.getName() != null) patient.setName(updates.getName());
-        if (updates.getEmail() != null) patient.setEmail(updates.getEmail());
-        if (updates.getLanguages() != null) patient.setLanguages(updates.getLanguages());
+        if (updates.getName() != null) owner.setName(updates.getName());
 
-        return repository.save(patient);
+        return repository.save(owner);
     }
 
     @DeleteMapping("/{id}")

@@ -22,8 +22,8 @@ public class ActorController {
     List<Actor> getActor() {return repository.findAll();}
 
     @PostMapping
-    public ResponseEntity<Actor> createActor(@RequestBody Actor newPatient){
-        return new ResponseEntity<>(repository.save(newPatient), HttpStatus.CREATED);
+    public ResponseEntity<Actor> createActor(@RequestBody Actor newActor){
+        return new ResponseEntity<>(repository.save(newActor), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -33,13 +33,12 @@ public class ActorController {
 
     @PutMapping("/{id}")
     public @ResponseBody Actor updateActor(@PathVariable Long id, @RequestBody Actor updates){
-        Actor patient = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Actor actor = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        if (updates.getName() != null) patient.setName(updates.getName());
-        if (updates.getEmail() != null) patient.setEmail(updates.getEmail());
-        if (updates.getLanguages() != null) patient.setLanguages(updates.getLanguages());
+        if (updates.getName() != null) actor.setName(updates.getName());
 
-        return repository.save(patient);
+
+        return repository.save(actor);
     }
 
     @DeleteMapping("/{id}")
