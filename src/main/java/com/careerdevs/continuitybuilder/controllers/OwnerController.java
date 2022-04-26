@@ -1,7 +1,9 @@
 package com.careerdevs.continuitybuilder.controllers;
 
 import com.careerdevs.continuitybuilder.models.Owner;
+import com.careerdevs.continuitybuilder.models.auth.User;
 import com.careerdevs.continuitybuilder.repositories.OwnerRepository;
+import com.careerdevs.continuitybuilder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +19,21 @@ public class OwnerController {
     @Autowired
     private OwnerRepository repository;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping
     public @ResponseBody
     List<Owner> getPatient() {return repository.findAll();}
 
     @PostMapping
-    public ResponseEntity<Owner> createOwner(@RequestBody Owner newOwner){
-        return new ResponseEntity<>(repository.save(newOwner), HttpStatus.CREATED);
+    public ResponseEntity<Owner> createOwner(@RequestBody Owner owner){
+        User user = userService.getCurrentUser();
+        if (user == null){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        owner.setUser(user);
+        return new ResponseEntity<>(repository.save(owner), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
