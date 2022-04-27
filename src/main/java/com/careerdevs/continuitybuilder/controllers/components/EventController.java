@@ -1,7 +1,9 @@
-package com.careerdevs.continuitybuilder.controllers;
+package com.careerdevs.continuitybuilder.controllers.components;
 
-import com.careerdevs.continuitybuilder.models.Event;
-import com.careerdevs.continuitybuilder.repositories.EventRepository;
+import com.careerdevs.continuitybuilder.models.components.Event;
+import com.careerdevs.continuitybuilder.repositories.OwnerRepository;
+import com.careerdevs.continuitybuilder.repositories.components.EventRepository;
+import com.careerdevs.continuitybuilder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,12 @@ public class EventController {
 
     @Autowired
     private EventRepository repository;
+
+    @Autowired
+    private OwnerRepository ownerRepository;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public @ResponseBody

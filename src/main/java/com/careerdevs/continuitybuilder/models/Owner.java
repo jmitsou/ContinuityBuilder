@@ -1,23 +1,42 @@
 package com.careerdevs.continuitybuilder.models;
 
 import com.careerdevs.continuitybuilder.models.auth.User;
+import com.careerdevs.continuitybuilder.models.components.Actor;
+import com.careerdevs.continuitybuilder.models.components.Event;
+import com.careerdevs.continuitybuilder.models.components.Location;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Owner {
 
+    //Fields
     @Id
     @GeneratedValue
     private Long id;
 
     private String name;
 
-    @JsonIgnore
+    //Relationships
+    //@JsonIgnore
     @OneToOne
     @JoinColumn(name = "users_id", referencedColumnName = "id")
     private User user;
+
+    @JsonIgnoreProperties("owner")
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    private Set<Actor> actors;
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    private Set<Event> events;
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    private Set<Location> locations;
+
+    //Constructors
     public Owner() {
     }
 
@@ -25,6 +44,7 @@ public class Owner {
         this.name = name;
     }
 
+    //Getters and Setters
     public Long getId() {
         return id;
     }
@@ -47,6 +67,30 @@ public class Owner {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<Actor> actors) {
+        this.actors = actors;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
+
+    public Set<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(Set<Location> locations) {
+        this.locations = locations;
     }
 }
 

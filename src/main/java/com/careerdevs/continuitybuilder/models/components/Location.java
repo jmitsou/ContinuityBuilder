@@ -1,8 +1,8 @@
-package com.careerdevs.continuitybuilder.models;
+package com.careerdevs.continuitybuilder.models.components;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.careerdevs.continuitybuilder.models.Owner;
+
+import javax.persistence.*;
 
 @Entity
 public class Location {
@@ -12,6 +12,10 @@ public class Location {
     private Long id;
     private String name;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    private Owner owner;
 
     public Location() {
     }
@@ -43,5 +47,12 @@ public class Location {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 }

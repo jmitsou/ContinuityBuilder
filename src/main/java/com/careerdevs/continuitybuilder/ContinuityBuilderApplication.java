@@ -1,8 +1,8 @@
 package com.careerdevs.continuitybuilder;
 
 import com.careerdevs.continuitybuilder.models.auth.ERole;
-import com.careerdevs.continuitybuilder.repositories.RoleRepository;
-import com.careerdevs.continuitybuilder.repositories.UserRepository;
+import com.careerdevs.continuitybuilder.repositories.auth.RoleRepository;
+import com.careerdevs.continuitybuilder.repositories.auth.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;

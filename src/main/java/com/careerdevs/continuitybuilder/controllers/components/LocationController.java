@@ -1,7 +1,9 @@
-package com.careerdevs.continuitybuilder.controllers;
+package com.careerdevs.continuitybuilder.controllers.components;
 
-import com.careerdevs.continuitybuilder.models.Location;
-import com.careerdevs.continuitybuilder.repositories.LocationRepository;
+import com.careerdevs.continuitybuilder.models.components.Location;
+import com.careerdevs.continuitybuilder.repositories.OwnerRepository;
+import com.careerdevs.continuitybuilder.repositories.components.LocationRepository;
+import com.careerdevs.continuitybuilder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,12 @@ public class LocationController {
 
     @Autowired
     private LocationRepository repository;
+
+    @Autowired
+    private OwnerRepository ownerRepository;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public @ResponseBody

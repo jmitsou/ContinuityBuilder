@@ -1,7 +1,11 @@
-package com.careerdevs.continuitybuilder.controllers;
+package com.careerdevs.continuitybuilder.controllers.components;
 
-import com.careerdevs.continuitybuilder.models.Actor;
-import com.careerdevs.continuitybuilder.repositories.ActorRepository;
+import com.careerdevs.continuitybuilder.models.Owner;
+import com.careerdevs.continuitybuilder.models.auth.User;
+import com.careerdevs.continuitybuilder.models.components.Actor;
+import com.careerdevs.continuitybuilder.repositories.OwnerRepository;
+import com.careerdevs.continuitybuilder.repositories.components.ActorRepository;
+import com.careerdevs.continuitybuilder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/actor")
@@ -17,12 +22,33 @@ public class ActorController {
     @Autowired
     private ActorRepository repository;
 
+    @Autowired
+    private OwnerRepository ownerRepository;
+
+    @Autowired
+    private UserService userService;
+
     @GetMapping
     public @ResponseBody
     List<Actor> getActor() {return repository.findAll();}
 
     @PostMapping
     public ResponseEntity<Actor> createActor(@RequestBody Actor newActor){
+        User user = userService.getCurrentUser();
+        if(user == null){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        Optional<Owner> currentOwner = ownerRepository.findByUser_id(user.getId());
+        if(currentOwner.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        //gets the created actor for the logged in Owner
+        newActor.setOwner(currentOwner.get());
+        //Adds the new Actor to the current owner
+        currentOwner.get().getActors().add(newActor);
+        //Saves Actor to current owners repository
+        ownerRepository.save(currentOwner.get());
+
         return new ResponseEntity<>(repository.save(newActor), HttpStatus.CREATED);
     }
 

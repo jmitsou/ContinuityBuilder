@@ -1,8 +1,8 @@
-package com.careerdevs.continuitybuilder.models;
+package com.careerdevs.continuitybuilder.models.components;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.careerdevs.continuitybuilder.models.Owner;
+
+import javax.persistence.*;
 
 @Entity
 public class Event {
@@ -11,6 +11,10 @@ public class Event {
     @GeneratedValue
     private Long id;
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    private Owner owner;
 
     public Event() {
     }
@@ -33,5 +37,13 @@ public class Event {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 }

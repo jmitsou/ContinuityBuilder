@@ -18,9 +18,6 @@ public class JwtUtils {
     @Value("${carreerdevs.continuitybuilder.jwtSecret}")
     private String jwtSecret;
 
-//    @Value("${geekylikes.app.jwtExpirationMs}")
-//    private int jwtExpirationMs
-
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

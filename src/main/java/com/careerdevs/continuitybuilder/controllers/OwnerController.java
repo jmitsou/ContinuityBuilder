@@ -7,6 +7,7 @@ import com.careerdevs.continuitybuilder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,9 +23,12 @@ public class OwnerController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping
     public @ResponseBody
-    List<Owner> getPatient() {return repository.findAll();}
+    List<Owner> getOwner() {return repository.findAll();}
 
     @PostMapping
     public ResponseEntity<Owner> createOwner(@RequestBody Owner owner){
@@ -46,6 +50,10 @@ public class OwnerController {
         Owner owner = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         if (updates.getName() != null) owner.setName(updates.getName());
+        if (updates.getUser().getPassword() != null){
+            String newpass = passwordEncoder.encode(updates.getUser().getPassword());
+            owner.getUser().setPassword(newpass);
+        };
 
         return repository.save(owner);
     }

@@ -1,4 +1,4 @@
-package com.careerdevs.continuitybuilder.repositories;
+package com.careerdevs.continuitybuilder.repositories.auth;
 
 import com.careerdevs.continuitybuilder.models.auth.ERole;
 import com.careerdevs.continuitybuilder.models.auth.Role;

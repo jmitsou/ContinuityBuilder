@@ -1,4 +1,4 @@
-package com.careerdevs.continuitybuilder.controllers;
+package com.careerdevs.continuitybuilder.controllers.auth;
 
 import com.careerdevs.continuitybuilder.models.auth.ERole;
 import com.careerdevs.continuitybuilder.models.auth.Role;
@@ -7,8 +7,8 @@ import com.careerdevs.continuitybuilder.payloads.request.LoginRequest;
 import com.careerdevs.continuitybuilder.payloads.request.SignupRequest;
 import com.careerdevs.continuitybuilder.payloads.response.JwtResponse;
 import com.careerdevs.continuitybuilder.payloads.response.MessageResponse;
-import com.careerdevs.continuitybuilder.repositories.RoleRepository;
-import com.careerdevs.continuitybuilder.repositories.UserRepository;
+import com.careerdevs.continuitybuilder.repositories.auth.RoleRepository;
+import com.careerdevs.continuitybuilder.repositories.auth.UserRepository;
 import com.careerdevs.continuitybuilder.security.jwt.JwtUtils;
 import com.careerdevs.continuitybuilder.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +84,23 @@ public class AuthController {
             Role userRole = roleRepository.findByName(ERole.ROLE_OWNER).orElseThrow(() -> new RuntimeException(
                     "Error: Role is not found"));
             roles.add(userRole);
+        }else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "admin":
+                    case "administrator":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_OVERLORD).orElseThrow(() -> new RuntimeException(
+                                "Error: Role is not found"));
+                        roles.add(adminRole);
+
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_OWNER).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+                        roles.add(userRole);
+
+                        break;
+                }
+            });
         }
 
         user.setRoles(roles);
