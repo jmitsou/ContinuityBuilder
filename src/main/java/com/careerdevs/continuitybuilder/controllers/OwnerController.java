@@ -49,12 +49,16 @@ public class OwnerController {
     public @ResponseBody Owner updateOwner(@PathVariable Long id, @RequestBody Owner updates){
         Owner owner = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        //Checks to see if a user was provided and then sets to current user
         if (updates.getName() != null) owner.setName(updates.getName());
+        //Checks password of current user in not empty
         if (updates.getUser().getPassword() != null){
-            String newpass = passwordEncoder.encode(updates.getUser().getPassword());
-            owner.getUser().setPassword(newpass);
+            //Hashes provided password
+            String newPass = passwordEncoder.encode(updates.getUser().getPassword());
+            //Sets new password
+            owner.getUser().setPassword(newPass);
         };
-
+        //Saves provided updates to Current Owner
         return repository.save(owner);
     }
 
