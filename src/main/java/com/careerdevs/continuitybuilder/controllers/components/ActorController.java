@@ -62,8 +62,9 @@ public class ActorController {
         Actor actor = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         if (updates.getName() != null) actor.setName(updates.getName());
-
-
+        if (updates.getOwner() != null) actor.setOwner(updates.getOwner());
+        if (updates.getEvents() != null) actor.setEvents(updates.getEvents());
+        if (updates.getLocations() != null) actor.setLocations(updates.getLocations());
         return repository.save(actor);
     }
 

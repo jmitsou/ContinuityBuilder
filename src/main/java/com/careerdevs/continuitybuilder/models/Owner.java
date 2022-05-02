@@ -21,12 +21,11 @@ public class Owner {
     private String name;
 
     //Relationships
-    //@JsonIgnore
     @OneToOne
     @JoinColumn(name = "users_id", referencedColumnName = "id")
     private User user;
 
-    @JsonIgnoreProperties("owner")
+
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private Set<Actor> actors;
 
