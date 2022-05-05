@@ -22,7 +22,7 @@ public class User {
     private String username;
 
     @NotBlank
-    @Size(min=5, max = 100)
+    @Size(min=8, max = 100)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)

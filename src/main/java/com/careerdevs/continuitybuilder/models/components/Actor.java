@@ -16,6 +16,7 @@ public class Actor {
     private Long id;
     private String name;
 
+    // notes field and roles field (player, NPC, Monster)
     @JsonIncludeProperties({"id", "name"})
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")

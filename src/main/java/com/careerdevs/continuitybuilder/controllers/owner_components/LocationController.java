@@ -1,4 +1,4 @@
-package com.careerdevs.continuitybuilder.controllers.components;
+package com.careerdevs.continuitybuilder.controllers.owner_components;
 
 import com.careerdevs.continuitybuilder.models.Owner;
 import com.careerdevs.continuitybuilder.models.auth.User;
