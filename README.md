@@ -16,8 +16,8 @@ Once they have been logged they will be able to be used to create adventures, mo
 
 ## Languages used
 
-**FrontEnd:** React
+**FrontEnd:** React/MUI
 
-**Backend:** Java, SpringBoot
+**Backend:** Java, SpringBoot, JWT, JBD
 
 **Server:** MySQL
