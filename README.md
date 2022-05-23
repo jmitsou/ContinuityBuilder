@@ -14,10 +14,6 @@ Once they have been logged they will be able to be used to create adventures, mo
 - Create multiple Journals
 
 
-##  About Me
-I'm a junior full stack developer... seeking new oppurtunities
-
-
 ## Languages used
 
 **FrontEnd:** React
